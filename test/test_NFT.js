@@ -48,13 +48,25 @@ contract('CryptoCattle', function (accounts) {
 
         beforeEach(async() => {
             
-            nft = await NFT.new({from : owner}); 
-            await nft.mintToken("tokendata.com", "Ginger Cow", "CCCGC", {from: owner});
+            dai = await Dai.new({from: account1, gas: 2000000});
+            nft = await NFT.new(dai.address, {from: owner});
 
+            await nft.mintToken("tokendata.com", "Ginger Cow", "CCCGC", {from: owner});
             let shareAddress = await nft.getShareAddress.call(1);
             shareToken = Share.at(shareAddress);
+        });
 
+        it('issue share tokens and process payments', async () => {
+            await shareToken.transfer(account2, 400, {from: owner});
+            await shareToken.transfer(account3, 600, {from: owner});
+            
+            let balance2 = await shareToken.balanceOf.call(account2);
+            let balance3 = await shareToken.balanceOf.call(account3);
+            assert.equal(400, balance2, 'acccount2 balance is incorrect');
+            assert.equal(600, balance3, 'acccount3 balance is incorrect');
 
+            nft.issuePayment(1, 2000, {from: account1});
+           
         });
     });
  });
