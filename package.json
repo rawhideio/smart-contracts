@@ -1,0 +1,28 @@
+{
+  "name": "rawhide-contracts",
+  "version": "1.0.0",
+  "description": "**Rawhide is a set of smart contracts for tokenizing and managing cattle on Ethereum.** It allows ranchers to generate ERC721 tokens for each livestock and issue ERC20 shares which are used for splitting payments using the **Dai Stablecoin.**",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "should": "^13.2.3",
+    "truffle-hdwallet-provider": "^0.0.6",
+    "zeppelin-solidity": "^1.12.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wyohack/WY_Contracts.git"
+  },
+  "author": "Rawhide",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wyohack/WY_Contracts/issues"
+  },
+  "homepage": "https://github.com/wyohack/WY_Contracts#readme"
+}
