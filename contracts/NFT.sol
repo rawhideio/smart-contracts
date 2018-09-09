@@ -14,12 +14,11 @@ contract NFT is ERC721Token, Ownable {
 
     constructor(address dai) ERC721Token("CryptoCattle", "CC") public { daiContract = dai; }
 
-
     event TokenMinted(address indexed owner, uint256 tokenId, string tokenURI);
     event SharesIssued(uint256 indexed tokenId, string shareSymbol);
 
     function mintToken(string _tokenURI, string _shareName, string _shareSymbol) 
-        public onlyOwner 
+        public 
         returns (uint256 newTokenId)
     {
         newTokenId = _getNextTokenId();
@@ -28,12 +27,21 @@ contract NFT is ERC721Token, Ownable {
         //add ERC20 minting at creation - 1,000K shares
         emit TokenMinted(msg.sender, newTokenId, _tokenURI);
 
-        Share newShare = new Share(_shareName, _shareSymbol, shareDecimals);
+        Share newShare = new Share(daiContract, _shareName, _shareSymbol, shareDecimals);
         newShare.mint(msg.sender, shareSupply);
         tokenShares[newTokenId] = address(newShare);
         emit SharesIssued(newTokenId, _shareSymbol);
 
         return newTokenId;
+    }
+
+    function issuePayment(uint _tokenId, uint _amount)
+        public returns(bool) 
+    {
+        require(tokenShares[_tokenId] != address(0));
+        Share shareInstance = Share(tokenShares[_tokenId]);
+        require(shareInstance.processPayment(_amount));
+        return true;
     }
 
     function getShareAddress(uint256 _tokenId)

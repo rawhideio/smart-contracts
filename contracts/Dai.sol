@@ -9,5 +9,4 @@ contract Dai is MintableToken {
     {
         mint(to, amount);
     }
-
 }

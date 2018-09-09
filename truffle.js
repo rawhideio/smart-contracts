@@ -11,8 +11,17 @@
  *     gasPrice: 10000000000,
  *   },
  */
+var HDWalletProvider = require("truffle-hdwallet-provider");
+
+var mnemonic = 'denial depart bunker skirt wink fame curious skirt veteran throw high interest';
 
 module.exports = {
-  // See <http://truffleframework.com/docs/advanced/configuration>
-  // to customize your Truffle configuration!
-};
+networks: {
+    ropsten: {
+      provider: function() {
+        return new HDWalletProvider(mnemonic, "https://ropsten.infura.io/vw2OdLrX5r9yQZoTwS0V")
+      },
+      network_id: 3
+    }   
+  }
+  };
